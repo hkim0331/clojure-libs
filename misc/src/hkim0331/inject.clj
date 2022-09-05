@@ -1,3 +1,4 @@
+
 (defn- inject-aux [coll ret]
   (if (empty? coll)
     ret

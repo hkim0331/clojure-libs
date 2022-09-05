@@ -94,3 +94,18 @@
   [n]
   (factor-aux n []))
 
+;; combinations
+(defn combinations
+  "coll must be disjoint"
+  [coll n]
+  (cond
+    (or (empty? coll) (zero? n)) []
+    (= 1 n) (map vector coll)
+    :else (concat
+           (map #(conj % (first coll))
+                (combinations (rest coll) (dec n)))
+           (combinations (rest coll) n))))
+
+(comment
+  (combinations [1 2 3] 2)
+  (combinations [1 2 3 4] 2))

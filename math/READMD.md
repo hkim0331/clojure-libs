@@ -6,6 +6,7 @@
 * primes
 * prime?
 * factor-integer
+* combinations
 
 ## test
 

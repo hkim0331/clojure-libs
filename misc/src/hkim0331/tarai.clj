@@ -1,4 +1,4 @@
-(ns hkim0331.tarai)
+(ns hkim0331.misc.tarai)
 
 (defn tarai
  [x y z]
@@ -8,22 +8,23 @@
           (tarai (dec y) z x)
           (tarai (dec z) x y))))
 
+
 ;; nuc で実験。コンテナはひどく遅い。
 (comment
   (time (tarai 15 7 0)))
-;;"Elapsed time: 28853.187034 msecs"
+;; macos "Elapsed time: 17523.399916 msecs"
+;;       "Elapsed time: 28853.187034 msecs"
 ;; docker-compose up
-;;"Elapsed time: 193561.018473 msecs"
-
+;;       "Elapsed time: 193561.018473 msecs"
 
 (comment
-  (time (tarai 15 8 0)))
+  (time (tarai 15 7 0)))
 ;; m2:
-;;"Elapsed time: 12051.361667 msecs"
-;;"Elapsed time: 12050.578041 msecs"
-;;"Elapsed time: 12041.758583 msecs"
+;;  "Elapsed time: 12051.361667 msecs"
+;;  "Elapsed time: 12050.578041 msecs"
+;;  "Elapsed time: 12041.758583 msecs"
 ;; nuc:
-;;"Elapsed time: 34066.433117 msecs"
+;;  "Elapsed time: 34066.433117 msecs"
 
 ;;(time (tarai 14 7 0))
 ;; clj : 1883msec
