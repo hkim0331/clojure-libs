@@ -6,6 +6,8 @@
   [n]
   (* n n))
 
+;; sqrt, Newton Raphson method
+
 ;; power
 (defn power
   "Returns b's power of n"
@@ -17,7 +19,8 @@
 
 (comment
   (power 2 0)
-  (power 2 10))
+  (power 2 10)
+  (power 2 100))
 
 ;; digits
 (defn digits
@@ -90,13 +93,13 @@
     (factor-odd n 3 ret)))
 
 (defn factor-integer
-  "factor integer n"
+  "factor integer of n"
   [n]
   (factor-aux n []))
 
 ;; combinations
 (defn combinations
-  "coll must be disjoint"
+  "choose n items from disjointed collection `coll`"
   [coll n]
   (cond
     (or (empty? coll) (zero? n)) []

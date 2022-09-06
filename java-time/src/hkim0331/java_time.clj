@@ -1,13 +1,11 @@
-(ns hkim0331.time
+(ns hkim0331.java-time
   (:require
    [clojure.string :as str]
    [java-time :as jt]))
 
-;;;
-;;; FIXME: when #(quot % 1000)?
-;;;
-
 ;; epoch = unix-time
+;; str->milli is a better name for this function?
+;; since the argument is not a datetime object.
 (defn datetime->milli
   "input: yyyy-MM-DD hh:mm:ss
    returns mlli seconds from 1970-01-01"
@@ -23,13 +21,14 @@
 ;; "2022-08-24T08:46:59Z"
 
 (defn datetime->epoch
- [s]
- (-> (datetime->milli s)
-     (quot 1000)))
+  [s]
+  (-> (datetime->milli s)
+      (quot 1000)))
 
+;; epoch->datetime-string
 (defn epoch->datetime
   "input is epoch (second)
-   returns string"
+   returns string formatted. default yyyy/MM/dd hh:mm:ss"
   ([epoch] (epoch->datetime "yyyy/MM/dd hh:mm:ss" epoch))
   ([fmt epoch] (->> (jt/instant->sql-timestamp (* 1000 epoch))
                     jt/local-date-time
@@ -40,14 +39,19 @@
   (let [ep (datetime->epoch "2022-08-25 12:34:56")]
     (epoch->datetime ep)))
 
-(defn now-in-epoch
+(defn now-in-milli
+  "returns milli from epoch"
   []
   (-> (jt/instant)
-      (jt/to-millis-from-epoch)
+      jt/to-mills-from-epoch))
+
+(defn now-in-epoch
+  "returns seconds from epoch"
+  []
+  (-> (now-in-milli)
       (quot 1000)))
 
 (comment
   (dotimes [_ 5]
     (println (epoch->datetime (now-in-epoch)))
     (Thread/sleep 1000)))
-
