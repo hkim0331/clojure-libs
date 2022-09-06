@@ -3,6 +3,7 @@
    [clojure.string :as str]
    [java-time :as jt]))
 
+;;; note
 ;; (jt/zone-id) returns java.time.ZoneRegionn "Asia/Tokyo"
 
 ;; str->milli is a better name for this function?
