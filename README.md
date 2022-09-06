@@ -1,13 +1,14 @@
-# libs
+# clojure-libs
 
-private clojure miscellaneous libraries.
+Private clojure libraries.
+Step by step reading [clojure.org/guides/deps_and_cli](https://clojure.org/guides/deps_and_cli).
 
-* how to write tests?
 * how to use local repos?
 * how to use git repos?
-
+* how to write tests?
 
 ## test
+(copied from `deps_and_cli`.)
 
 add aliases to deps.edn:
 
@@ -24,7 +25,3 @@ add aliases to deps.edn:
 then,
 
     % clj -X:test
-
-
-
-
