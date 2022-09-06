@@ -44,7 +44,7 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn str->epoch
-  "2022/09/06 12:34:56 -> epoch"
+  "string '2022/09/06 12:34:56' -> epoch second"
   [s]
   (let [[date time] (str/split s #" ")]
     (-> (str date "T" time ".00Z")
@@ -58,3 +58,13 @@
 (comment
   (str->epoch "2022-09-06 12:34:56")
   (str->milli "2022-09-06 12:34:56"))
+
+;;; Instant
+(comment
+  (Instant/ofEpochSecond 0)
+  (Instant/now)
+  (-> (Instant/now)
+      (instant->datetime)))
+
+(-> (Instant/now)
+    instant->datetime)

@@ -7,9 +7,11 @@
 
 ;; str->milli is a better name for this function?
 ;; since the argument is not a datetime object.
+;; FIXME: 43200 second
 (defn datetime->milli
-  "input: yyyy-MM-DD hh:mm:ss
-   returns mlli seconds from 1970-01-01"
+  "local-date-time string to integer milli.
+   Input is a string, 'yyyy-MM-DD hh:mm:ss'
+   Returns mlli seconds from 1970-01-01"
   [s]
   (let [[date time] (str/split s #" ")]
     (-> (str date "T" time)
@@ -24,14 +26,22 @@
   (-> (datetime->milli s)
       (quot 1000)))
 
-;; epoch->datetime-string
+(defn milli->datetime
+  "input is milli,
+   returns string formatted datetime. default yyyy-mm-dd hh:mm:ss"
+  ([milli]
+   (milli->datetime "yyyy-MM-dd hh:mm:ss a" milli))
+  ([fmt milli]
+   (as-> (jt/instant->sql-timestamp milli) $
+         (jt/local-date-time $)
+         (jt/format fmt $))))
+
 (defn epoch->datetime
-  "input is epoch (second)
-   returns string formatted. default yyyy/MM/dd hh:mm:ss"
-  ([epoch] (epoch->datetime "yyyy-MM-dd hh:mm:ss" epoch))
-  ([fmt epoch] (->> (jt/instant->sql-timestamp (* 1000 epoch))
-                    jt/local-date-time
-                    (jt/format fmt))))
+  ""
+  ([epoch]
+   (epoch->datetime "yyyy-MM-dd hh:mm:ss" epoch))
+  ([fmt epoch]
+   (milli->datetime fmt (* 1000 epoch))))
 
 (comment
   (datetime->epoch "2022-08-25 12:34:56")
