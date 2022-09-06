@@ -1,4 +1,4 @@
-(ns hkim0331.misc.tarai)
+(ns hkim0331.tarai)
 
 (defn tarai
  [x y z]
