@@ -3,8 +3,13 @@
 ## [Unreleased]
 - Java interface is one of my weak points.
 
+## 0.2.1-SNAPSHOT
+### Changed
+- move `sort` into `misc`.
+
 ## [0.2.0] - 2022-09-06
-- javatime and java-time
+### Added
+- create `javatime`. learning use of java libraries from clojure.
 
 ## 0.1.0 - 2022-09-06
 - initialize repository
