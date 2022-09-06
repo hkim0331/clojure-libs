@@ -28,7 +28,7 @@
 (defn epoch->datetime
   "input is epoch (second)
    returns string formatted. default yyyy/MM/dd hh:mm:ss"
-  ([epoch] (epoch->datetime "yyyy/MM/dd hh:mm:ss" epoch))
+  ([epoch] (epoch->datetime "yyyy-MM-dd hh:mm:ss" epoch))
   ([fmt epoch] (->> (jt/instant->sql-timestamp (* 1000 epoch))
                     jt/local-date-time
                     (jt/format fmt))))
@@ -42,7 +42,7 @@
   "returns milli from epoch"
   []
   (-> (jt/instant)
-      jt/to-mills-from-epoch))
+      jt/to-millis-from-epoch))
 
 (defn now-in-epoch
   "returns seconds from epoch"
