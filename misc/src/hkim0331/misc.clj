@@ -14,9 +14,7 @@
      (str/replace s re (str "$1" "...")))))
 
 ;; conversion between `char` and `int`
-;;
 ;; no use!
-;;
 ;; (defn char->int
 ;;   [c]
 ;;   (int c))

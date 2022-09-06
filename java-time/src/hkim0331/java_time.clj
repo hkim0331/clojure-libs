@@ -3,7 +3,8 @@
    [clojure.string :as str]
    [java-time :as jt]))
 
-;; epoch = unix-time
+;; (jt/zone-id) returns java.time.ZoneRegionn "Asia/Tokyo"
+
 ;; str->milli is a better name for this function?
 ;; since the argument is not a datetime object.
 (defn datetime->milli
@@ -17,8 +18,6 @@
 
 ;; (java.time.Instant/ofEpochMilli 1661330819000))
 ;; #object[java.time.Instant 0x6f6a7463 "2022-08-24T08:46:59Z"]
-;; (str *1)
-;; "2022-08-24T08:46:59Z"
 
 (defn datetime->epoch
   [s]

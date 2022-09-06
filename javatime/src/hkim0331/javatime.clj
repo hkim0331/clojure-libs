@@ -27,12 +27,14 @@
     (.format dtf (epoch->datetime 1661330819))))
 
 (defn epoch->str
-  [fmt epoch]
-  (->> epoch
-       epoch->datetime
-       (.format (DateTimeFormatter/ofPattern fmt))))
+  ([epoch] (epoch->str "yyyy/MM/dd hh:mm:ss" epoch))
+  ([fmt epoch]
+   (->> epoch
+        epoch->datetime
+        (.format (DateTimeFormatter/ofPattern fmt)))))
 
 (comment
+  (epoch->str 161330819)
   (epoch->str "yyyy/MM/dd hh:mm" 1661330819))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
