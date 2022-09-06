@@ -1,7 +1,8 @@
 # clojure-libs
 
 Private clojure libraries.
-Step by step reading [clojure.org/guides/deps_and_cli](https://clojure.org/guides/deps_and_cli).
+Step by step reading/learning
+[clojure.org/guides/deps_and_cli](https://clojure.org/guides/deps_and_cli).
 
 * how to use local repos?
 * how to use git repos?

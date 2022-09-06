@@ -9,3 +9,8 @@
     (is (= "1234567" (abbrev "1234567")))
     (is (= "12345678..." (abbrev "12345678...")))))
 
+(deftest qsort-test
+  (testing "test qsort"
+    (is (= [] (qsort [])))
+    (is (= (range 10) (qsort (reverse (range 10)))))
+    (is (= true (ordered? (range 10))))))
