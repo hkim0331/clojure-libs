@@ -40,8 +40,6 @@
   (let [ep (datetime->epoch "2022-08-25 12:34:56")]
     (epoch->datetime ep)))
 
-
-;; Appetizer
 (defn now-in-epoch
   []
   (-> (jt/instant)
