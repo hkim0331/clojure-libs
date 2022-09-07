@@ -9,13 +9,21 @@
 ;; sqrt, Newton Raphson method
 
 ;; power
-(defn power
-  "Returns b's power of n"
+(defn- pow
+  "returns b's power of n. n must be positive."
   [b n]
   (cond
     (zero? n) 1N
-    (even? n) (sq (power b (/ n 2)))
-    :else (* b (power b (dec n)))))
+    (even? n) (sq (pow b (/ n 2)))
+    :else (* b (pow b (dec n)))))
+
+(defn power
+  ""
+  [b n]
+  (cond
+    (pos? n) (pow b n)
+    (zero? n) 1
+    :else (/ 1 (pow b (- n)))))
 
 (comment
   (power 2 0)

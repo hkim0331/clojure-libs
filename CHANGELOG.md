@@ -10,7 +10,10 @@
 ```
 
 ## 0.2.2-SNAPSHOT
-### NG
+### Fixed
+- fix typo in javatime/javatime.clj
+
+### FIXME
 - expand
 
 ## [0.2.1] - 2022-09-07
