@@ -51,7 +51,6 @@
     (.format dtf (second->datetime 1661330819))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (comment
   (let [dtf (DateTimeFormatter/ofPattern "yyyy-MM-dd")]
     [(.format dtf (second->datetime 1661330819))
@@ -63,11 +62,6 @@
   ([fmt n]
    (->> (second->datetime n)
         (.format (DateTimeFormatter/ofPattern fmt)))))
-
-(comment
-  (second->str 1661330819)
-  (second->str "yyyy/MM/dd hh:mm a" 1661330819)
-  (second->str (now-in-second)))
 
 ;; WHY T, Z?
 (defn str->second
@@ -81,6 +75,8 @@
   (* 1000 (str->second s)))
 
 (comment
+  (second->str 1661330819)
+  (second->str "yyyy/MM/dd hh:mm a" 1661330819)
+  (second->str (now-in-second))
   (str->milli  "2022-09-06T12:34:56Z")
   (str->second "2022-09-06T12:34:56Z"))
-
