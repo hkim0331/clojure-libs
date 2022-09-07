@@ -47,7 +47,8 @@
   (milli->datetime (* 1000 epoch)))
 
 (comment
-  (second->datetime (now-in-second)))
+  (let [dtf (DateTimeFormatter/ofPattern "yyyy/MM/dd")]
+    (.format dtf (epoch->datetime 1661330819))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 

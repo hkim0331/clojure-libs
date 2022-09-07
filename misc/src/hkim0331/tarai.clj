@@ -1,4 +1,6 @@
-(ns hkim0331.misc.tarai)
+(ns hkim0331.tarai)
+
+(def version "0.0.1")
 
 (defn tarai
  [x y z]
