@@ -2,12 +2,8 @@
 
 ## Unreleased
 - Java interface is one of my weak points.
-### Bug
- ```
-(let [e (hj/now-in-epoch)
-      e2 (hj/datetime->epoch (hj/epoch->datetime e)
-     (- e e2))
-```
+- improve java-time.
+
 
 ## [0.2.2] - 2022-09-07
 ### Fixed

@@ -1,4 +1,6 @@
-(ns hkim0331.math)
+(ns hkim0331.math
+  (:require
+   [clolure.math :as math]))
 
 ;; sq
 (defn sq
@@ -8,7 +10,7 @@
 
 ;; sqrt, Newton Raphson method
 
-;; power
+;;; clojure.math/power
 (defn- pow
   "returns b's power of n. n must be positive."
   [b n]
@@ -26,9 +28,9 @@
     :else (/ 1 (pow b (- n)))))
 
 (comment
-  (power 2 0)
-  (power 2 10)
-  (power 2 100))
+  (= (power 2 0) (math/power 2 0))
+  (= (power 2 10) (math/power 2 10))
+  (= (power 2 100)(math/power 2 100)))
 
 ;; digits
 (defn digits
@@ -65,10 +67,9 @@
       (primes-from 11 wheel)))))
 
 (defn- prime?-aux
-  [n]
-  (let [inc2 (comp inc inc)]
-    (every? #(pos? (mod n %))
-            (take-while #(<= (* % %) n) (iterate inc2 3)))))
+  [n
+   (every? #(pos? (mod n %))
+            (take-while #(<= (* % %) n) (iterate #(+ 2 %) 3)))])
 
 (defn prime?
   "n is prime?"
@@ -79,11 +80,9 @@
     :else (prime?-aux n)))
 
 (defn prime
-  "Returns nth prime number"
+  "Returns nth prime number."
   [n]
-  (->> primes
-       (take n)
-       last))
+  (->> primes (take n) last))
 
 ;; how to be lazy?
 ;; 2021-02-14
@@ -101,13 +100,13 @@
     (factor-odd n 3 ret)))
 
 (defn factor-integer
-  "factor integer of n"
+  "Factor integer of n"
   [n]
   (factor-aux n []))
 
 ;; combinations
 (defn combinations
-  "choose n items from disjointed collection `coll`"
+  "Choose n items from disjointed collection `coll`."
   [coll n]
   (cond
     (or (empty? coll) (zero? n)) []

@@ -20,8 +20,8 @@
 
 (defn str->milli
   "local-date-time string to integer milli.
-   Input string must be in format 'yyyy-MM-DDThh:mm:ss'
-   Returns mlli seconds from 1970-01-01"
+   Input string must be in the format 'yyyy-MM-DDThh:mm:ss'
+   Returns mlli from 1970-01-01"
   [s]
   (-> (jt/sql-timestamp s)
       (jt/to-millis-from-epoch)))
