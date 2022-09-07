@@ -3,6 +3,7 @@
 * sq
 * power
 * digits
+* power
 * primes
 * prime?
 * factor-integer
