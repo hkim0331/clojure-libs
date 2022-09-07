@@ -3,6 +3,7 @@
    [clojure.string :as str])
   (:import java.util.Base64))
 
+
 ;;; string abbreviation
 (defn abbrev
   "abbreviate string s. default 8 characters.
@@ -13,15 +14,6 @@
    (let [re (re-pattern (format "^(.{%d}).*" n))]
      (str/replace s re (str "$1" "...")))))
 
-;; conversion between `char` and `int`
-;; no use!
-;; (defn char->int
-;;   [c]
-;;   (int c))
-;;
-;; (defn int->char
-;;   [n]
-;;   (char n))
 
 ;;; Base 64
 (defn ->base64
@@ -37,6 +29,7 @@
        (map char)
        (apply str)))
 
+
 ;; compress/expand
 (defn compress
   "compress message
@@ -49,11 +42,20 @@
        (map #(str (first %) (count %)))
        (apply str)))
 
+;;(compress "aaabbccc")
+(compress "aaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbcccc")
+(defn- digit?
+  [c]
+  (seq (filter (partial = c) "0123456789")))
+
+;;(digit? \a)
+
 (defn- expand-1
   [[[c] [n]]]
-  (->> (repeat (char->int n) c)
-      (apply str)))
+  (->> (repeat n c)
+       (apply str)))
 
+;; No good.
 (defn expand
   "retrieve original message from compressed one"
   [s]
@@ -62,6 +64,10 @@
        (partition 2)
        (map expand-1)
        (apply str)))
+
+(compress "aaabbbccc")
+(expand *1)
+
 
 ;;; qsort
 (defn- smaller

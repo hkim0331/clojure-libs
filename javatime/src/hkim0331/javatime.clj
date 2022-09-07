@@ -48,7 +48,7 @@
 
 (comment
   (let [dtf (DateTimeFormatter/ofPattern "yyyy/MM/dd")]
-    (.format dtf (epoch->datetime 1661330819))))
+    (.format dtf (second->datetime 1661330819))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -81,5 +81,6 @@
   (* 1000 (str->second s)))
 
 (comment
-  (str->milli "2022-09-06T12:34:56Z")
+  (str->milli  "2022-09-06T12:34:56Z")
   (str->second "2022-09-06T12:34:56Z"))
+
