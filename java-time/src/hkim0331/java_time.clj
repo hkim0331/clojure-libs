@@ -3,11 +3,10 @@
    [clojure.string :as str]
    [java-time :as jt]))
 
-;; epoch = unix-time
 ;; str->milli is a better name for this function?
 ;; since the argument is not a datetime object.
 (defn datetime->milli
-  "input: yyyy-MM-DD hh:mm:ss
+  "input: string 'yyyy-MM-DD hh:mm:ss'
    returns mlli seconds from 1970-01-01"
   [s]
   (let [[date time] (str/split s #" ")]
@@ -17,8 +16,6 @@
 
 ;; (java.time.Instant/ofEpochMilli 1661330819000))
 ;; #object[java.time.Instant 0x6f6a7463 "2022-08-24T08:46:59Z"]
-;; (str *1)
-;; "2022-08-24T08:46:59Z"
 
 (defn datetime->epoch
   [s]
