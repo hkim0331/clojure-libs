@@ -1,9 +1,35 @@
 (ns hkim0331.javatime
-  (:require
-   [clojure.string :as str])
+  ;; without import, java libraries are callable.
+  ;; when imported, aliases can be used. not FQN.
   (:import
    [java.time LocalDateTime Instant ZoneId]
    [java.time.format DateTimeFormatter]))
+
+;; % date -d '@1662467696'
+;; % date -u -d '@1662467696'
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn now-in-milli
+  []
+  (System/currentTimeMillis))
+
+(defn now-in-second
+  []
+  (-> (now-in-milli)
+      (quot 1000)))
+
+(comment
+  (now-in-milli)
+  (now-in-second))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn instant->datetime
+  [instant]
+  (LocalDateTime/ofInstant instant (ZoneId/of "Asia/Tokyo")))
+
+(comment
+  (Instant/now)
+  (instant->datetime (Instant/now)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defn milli->datetime
@@ -12,47 +38,47 @@
   [milli]
   (-> milli
       Instant/ofEpochMilli
-      (LocalDateTime/ofInstant (ZoneId/of "Asia/Tokyo"))))
+      (instant->datetime)))
 
-(defn epoch->datetime
+(defn second->datetime
   "input epich (second),
    returns LocalDateTime object"
   [epoch]
-  (-> epoch
-      (* 1000)
-      milli->datetime))
+  (milli->datetime (* 1000 epoch)))
 
 (comment
-  (let [dtf (DateTimeFormatter/ofPattern "yyyy/MM/dd")]
-    (.format dtf (epoch->datetime 1661330819))))
+  (second->datetime (now-in-second)))
 
-(defn epoch->str
-  [fmt epoch]
-  (->> epoch
-       epoch->datetime
-       (.format (DateTimeFormatter/ofPattern fmt))))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (comment
-  (epoch->str "yyyy/MM/dd hh:mm" 1661330819))
+  (let [dtf (DateTimeFormatter/ofPattern "yyyy-MM-dd")]
+    [(.format dtf (second->datetime 1661330819))
+     (.format dtf (-> (now-in-second) (second->datetime)))]))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defn instant->datetime
-  [instant]
-  (LocalDateTime/ofInstant instant (ZoneId/of "Asia/Tokyo")))
+(defn second->str
+  ([n]
+   (second->str "yyyy-MM-dd hh:mm:dd" n))
+  ([fmt n]
+   (->> (second->datetime n)
+        (.format (DateTimeFormatter/ofPattern fmt)))))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(defn str->epoch
-  "2022/09/06 12:34:56 -> epoch"
+(comment
+  (second->str 1661330819)
+  (second->str "yyyy/MM/dd hh:mm a" 1661330819)
+  (second->str (now-in-second)))
+
+;; WHY T, Z?
+(defn str->second
+  "2022-09-06T12:34:56Z -> second"
   [s]
-  (let [[date time] (str/split s #" ")]
-    (-> (str date "T" time ".00Z")
-        Instant/parse
-        .getEpochSecond)))
+  (-> (Instant/parse s)
+      .getEpochSecond))
 
 (defn str->milli
   [s]
-  (* 1000 (str->epoch s)))
+  (* 1000 (str->second s)))
 
 (comment
-  (str->epoch "2022-09-06 12:34:56")
-  (str->milli "2022-09-06 12:34:56"))
+  (str->milli "2022-09-06T12:34:56Z")
+  (str->second "2022-09-06T12:34:56Z"))
