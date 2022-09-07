@@ -41,13 +41,14 @@
       (instant->datetime)))
 
 (defn second->datetime
-  "input epich (second),
+  "input second from epoch,
    returns LocalDateTime object"
-  [epoch]
-  (milli->datetime (* 1000 epoch)))
+  [second]
+  (milli->datetime (* 1000 second)))
 
 (comment
-  (second->datetime (now-in-second)))
+  (let [dtf (DateTimeFormatter/ofPattern "yyyy/MM/dd")]
+    (.format dtf (second->datetime 1661330819))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
@@ -80,5 +81,6 @@
   (* 1000 (str->second s)))
 
 (comment
-  (str->milli "2022-09-06T12:34:56Z")
+  (str->milli  "2022-09-06T12:34:56Z")
   (str->second "2022-09-06T12:34:56Z"))
+

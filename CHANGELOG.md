@@ -2,6 +2,17 @@
 
 ## Unreleased
 - Java interface is one of my weak points.
+### Bug
+ ```
+(let [e (hj/now-in-epoch)
+      e2 (hj/datetime->epoch (hj/epoch->datetime e)
+     (- e e2))
+```
+
+## [0.2.2] - 2022-09-07
+### Fixed
+- fix typo in javatime/javatime.clj
+- misc/expand
 
 ## [0.2.1] - 2022-09-07
 ### Changed
@@ -16,6 +27,8 @@
 ## 0.1.0 - 2022-09-06
 - initialize repository
 
+
+[0.2.2]:https://github.com/hkim0331/clojure-libs/compare/0.2.2...0.2.1
 [0.2.1]:https://github.com/hkim0331/clojure-libs/compare/0.2.1...0.2.0
 [0.2.0]: https://github.com/hkim0331/clojure-libs/compare/0.1.0...0.2.0
 [0.1.1]: https://github.com/hkim0331/clojure-libs/compare/0.1.0...0.1.1
