@@ -42,31 +42,34 @@
        (map #(str (first %) (count %)))
        (apply str)))
 
-;;(compress "aaabbccc")
-(compress "aaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbcccc")
-(defn- digit?
+(defn digit?
   [c]
   (seq (filter (partial = c) "0123456789")))
 
-;;(digit? \a)
+(defn small-alpha?
+  [c]
+  (seq (filter (partial = c) "abcdefghijklmnopqrstuvwxyz")))
+
+(defn large-alpha?
+  [c]
+  (seq (filter (partial = c) "ABCDEFGHIJKLMNOPQRSTUVWXYZ")))
+
+(defn alpha?
+  [c]
+  (or (small-alpha? c) (large-alpha? c)))
 
 (defn- expand-1
-  [[[c] [n]]]
-  (->> (repeat n c)
-       (apply str)))
+  [[[c] coll]]
+  (let [n (-> (apply str coll) Integer/parseInt)]
+    (->> (repeat n c) (apply str))))
 
-;; No good.
 (defn expand
   "retrieve original message from compressed one"
   [s]
-  (->> s
-       (partition-by digit?)
+  (->> (partition-by alpha? s)
        (partition 2)
        (map expand-1)
        (apply str)))
-
-(compress "aaabbbccc")
-(expand *1)
 
 
 ;;; qsort
@@ -104,6 +107,7 @@
        (map #(<= (first %) (second %)))
        (every? true?)))
 
+
 ;;; fold
 ;; https://stackoverflow.com/questions/16800255/how-do-we-do-both-left-and-right-folds-in-clojure
 (defn fold-l
@@ -121,6 +125,7 @@
 (comment
   (fold-l + 0 (range 10))
   (fold-r + 0 (range 10)))
+
 
 ;;; inject
 (defn- inject-aux [coll ret]
