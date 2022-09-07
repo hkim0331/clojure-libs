@@ -1,5 +1,4 @@
 # clojure-libs
-
 Private clojure libraries.
 Step by step reading/learning
 [clojure.org/guides/deps_and_cli](https://clojure.org/guides/deps_and_cli).
@@ -7,6 +6,13 @@ Step by step reading/learning
 * how to use local repos?
 * how to use git repos?
 * how to write tests?
+
+## namespaces/libraries
+
+* java-time
+* javatime
+* math
+* misc
 
 ## test
 (copied from `deps_and_cli`.)

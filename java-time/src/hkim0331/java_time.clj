@@ -3,52 +3,58 @@
    [clojure.string :as str]
    [java-time :as jt]))
 
-;; str->milli is a better name for this function?
-;; since the argument is not a datetime object.
-(defn datetime->milli
-  "input: string 'yyyy-MM-DD hh:mm:ss'
-   returns mlli seconds from 1970-01-01"
-  [s]
-  (let [[date time] (str/split s #" ")]
-    (-> (str date "T" time)
-        jt/sql-timestamp
-        jt/to-millis-from-epoch)))
-
-;; (java.time.Instant/ofEpochMilli 1661330819000))
-;; #object[java.time.Instant 0x6f6a7463 "2022-08-24T08:46:59Z"]
-
-(defn datetime->epoch
-  [s]
-  (-> (datetime->milli s)
-      (quot 1000)))
-
-;; epoch->datetime-string
-(defn epoch->datetime
-  "input is epoch (second)
-   returns string formatted. default yyyy/MM/dd hh:mm:ss"
-  ([epoch] (epoch->datetime "yyyy/MM/dd hh:mm:ss" epoch))
-  ([fmt epoch] (->> (jt/instant->sql-timestamp (* 1000 epoch))
-                    jt/local-date-time
-                    (jt/format fmt))))
-
-(comment
-  (datetime->epoch "2022-08-25 12:34:56")
-  (let [ep (datetime->epoch "2022-08-25 12:34:56")]
-    (epoch->datetime ep)))
+;; % date -d '@1662467696'
+;; % date -u -d '@1662467696'
 
 (defn now-in-milli
   "returns milli from epoch"
   []
-  (-> (jt/instant)
-      jt/to-mills-from-epoch))
+  (System/currentTimeMillis))
 
-(defn now-in-epoch
+(defn now-in-second
   "returns seconds from epoch"
   []
   (-> (now-in-milli)
       (quot 1000)))
 
+
+(defn str->milli
+  "local-date-time string to integer milli.
+   Input string must be in format 'yyyy-MM-DDThh:mm:ss'
+   Returns mlli seconds from 1970-01-01"
+  [s]
+  (-> (jt/sql-timestamp s)
+      (jt/to-millis-from-epoch)))
+
+;; (java.time.Instant/ofEpochMilli 1661330819000))
+;; #object[java.time.Instant 0x6f6a7463 "2022-08-24T08:46:59Z"]
+
+(defn str->second
+  [s]
+  (-> (datetime->milli s)
+      (quot 1000)))
+
+(defn milli->str
+  "input is milli,
+   returns string formatted datetime. default yyyy-mm-dd hh:mm:ss"
+  ([milli]
+   (milli->datetime "yyyy-MM-dd hh:mm:ss a" milli))
+  ([fmt milli]
+   (->> (jt/instant->sql-timestamp milli)
+        (jt/local-date-time)
+        (jt/format fmt))))
+
+(defn second->str
+  ""
+  ([second]
+   (epoch->datetime "yyyy-MM-dd hh:mm:ss" second))
+  ([fmt second]
+   (milli->datetime fmt (* 1000 second))))
+
 (comment
+  (datetime->epoch "2022-08-25 12:34:56")
+  (let [ep (datetime->epoch "2022-08-25 12:34:56")]
+    (epoch->datetime ep))
   (dotimes [_ 5]
     (println (epoch->datetime (now-in-epoch)))
     (Thread/sleep 1000)))
