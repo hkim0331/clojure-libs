@@ -95,7 +95,7 @@
 (defn- eqls
   "returns items equal to n in coll"
   [n coll]
-  (filter %(= n %) coll))
+  (filter #(= n %) coll))
 
 (defn qsort
   "quick-sort coll"

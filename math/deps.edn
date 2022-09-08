@@ -1,8 +1,6 @@
-{:deps
- {}
+{ :src ["src"]
 
- :src
- ["src"]
+ :deps {}
 
  :aliases
  ;; clj -A:test -Spath

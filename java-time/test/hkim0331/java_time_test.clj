@@ -3,14 +3,14 @@
    [clojure.test :refer [deftest testing is]]
    [hkim0331.java-time :refer :all]))
 
-(deftest datetime->milli-test
-  (testing "datetime->milli"
+(deftest str->milli-test
+  (testing "str->milli"
     (is (= 1 1))))
 
 ;; not. differ 9 hours
-(deftest epoch-datetime
-  (testing "epoch-datetime relation"
-    (let [e  (now-in-epoch)
-          s  (epoch->datetime e)
-          e2 (datetime->epoch s)]
+(deftest second->str
+  (testing "second->str relation"
+    (let [e  (now-in-second)
+          s  (second->str e)
+          e2 (str->second s)]
       (is (zero? (- e e2))))))

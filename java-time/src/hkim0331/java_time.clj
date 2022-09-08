@@ -31,14 +31,14 @@
 
 (defn str->second
   [s]
-  (-> (datetime->milli s)
+  (-> (str->milli s)
       (quot 1000)))
 
 (defn milli->str
   "input is milli,
    returns string formatted datetime. default yyyy-mm-dd hh:mm:ss"
   ([milli]
-   (milli->datetime "yyyy-MM-dd hh:mm:ss a" milli))
+   (milli->str "yyyy-MM-dd hh:mm:ss a" milli))
   ([fmt milli]
    (->> (jt/instant->sql-timestamp milli)
         (jt/local-date-time)
@@ -47,14 +47,14 @@
 (defn second->str
   ""
   ([second]
-   (epoch->datetime "yyyy-MM-dd hh:mm:ss" second))
+   (second->str "yyyy-MM-dd hh:mm:ss" second))
   ([fmt second]
-   (milli->datetime fmt (* 1000 second))))
+   (milli->str fmt (* 1000 second))))
 
 (comment
-  (datetime->epoch "2022-08-25 12:34:56")
-  (let [ep (datetime->epoch "2022-08-25 12:34:56")]
-    (epoch->datetime ep))
+  (str->second "2022-08-25 12:34:56")
+  (let [ep (str->second "2022-08-25 12:34:56")]
+    (second->str ep))
   (dotimes [_ 5]
-    (println (epoch->datetime (now-in-epoch)))
+    (println (second->str (now-in-second)))
     (Thread/sleep 1000)))
