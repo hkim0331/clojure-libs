@@ -1,7 +1,16 @@
 (ns hkim0331.misc
   (:require
-   [clojure.string :as str])
+   [clojure.string :as str]
+   [clojure.tools.logging :as log])
   (:import java.util.Base64))
+
+;;; probe
+(defn probe
+  ([x]
+   (probe x #(log/info "probe" %)))
+  ([x f]
+   (f x)
+   x))
 
 
 ;;; string abbreviation
@@ -44,15 +53,15 @@
 
 (defn digit?
   [c]
-  (seq (filter (partial = c) "0123456789")))
+  (seq (filter #(= c %) "0123456789")))
 
 (defn small-alpha?
   [c]
-  (seq (filter (partial = c) "abcdefghijklmnopqrstuvwxyz")))
+  (seq (filter #(= c %) "abcdefghijklmnopqrstuvwxyz")))
 
 (defn large-alpha?
   [c]
-  (seq (filter (partial = c) "ABCDEFGHIJKLMNOPQRSTUVWXYZ")))
+  (seq (filter #(= c %) "ABCDEFGHIJKLMNOPQRSTUVWXYZ")))
 
 (defn alpha?
   [c]
@@ -86,7 +95,7 @@
 (defn- eqls
   "returns items equal to n in coll"
   [n coll]
-  (filter (partial = n) coll))
+  (filter %(= n %) coll))
 
 (defn qsort
   "quick-sort coll"
