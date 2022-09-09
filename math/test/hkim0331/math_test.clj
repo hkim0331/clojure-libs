@@ -1,6 +1,6 @@
 (ns hkim0331.math-test
   (:require
-   [clojure.test :refer :all]
+   [clojure.test :refer [deftest testing is]]
    [hkim0331.math :refer :all]))
 
 (deftest power-test
@@ -23,10 +23,10 @@
     (is (= true (prime? 2)))
     (is (= true (prime? 3)))))
 
-(deftest factor-test
+(deftest factor-integer-test
   (testing "test factor-integer"
-    (is (= []  (factor 1)))
-    (is (= [2] (factor 2)))
-    (is (= [2 2 2 2 2 2 2 2 2 2] (factor 1024)))
-    (is (= [3 3 3607 3803] (factor 123456789)))))
+    (is (= []  (factor-integer 1)))
+    (is (= [2] (factor-integer 2)))
+    (is (= [2 2 2 2 2 2 2 2 2 2] (factor-integer 1024)))
+    (is (= [3 3 3607 3803] (factor-integer 123456789)))))
 

@@ -1,17 +1,15 @@
 (ns hkim0331.misc
   (:require
-   [clojure.string :as str]
-   [clojure.tools.logging :as log])
+   [clojure.string :as str])
   (:import java.util.Base64))
 
 ;;; probe
 (defn probe
   ([x]
-   (probe x #(log/info "probe" %)))
+   (probe x #(println "probe:" %)))
   ([x f]
    (f x)
    x))
-
 
 ;;; string abbreviation
 (defn abbrev
