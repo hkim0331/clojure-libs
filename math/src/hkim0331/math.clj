@@ -1,6 +1,6 @@
 (ns hkim0331.math
   (:require
-   [clolure.math :as math]))
+   [clojure.math :as math]))
 
 ;; sq
 (defn sq
@@ -27,11 +27,6 @@
     (zero? n) 1
     :else (/ 1 (pow b (- n)))))
 
-(comment
-  (= (power 2 0) (math/power 2 0))
-  (= (power 2 10) (math/power 2 10))
-  (= (power 2 100)(math/power 2 100)))
-
 ;; digits
 (defn digits
   "Returns digits in positive integer n. "
@@ -39,10 +34,6 @@
   (if (< n 10)
     1
     (+ 1 (digits (/ n 10)))))
-
-(comment
-  (digits 12345)
-  (digits (power 10 10)))
 
 ;; primes
 ;; Excerpted from "Programming Clojure, Third Edition",
@@ -67,9 +58,9 @@
       (primes-from 11 wheel)))))
 
 (defn- prime?-aux
-  [n
-   (every? #(pos? (mod n %))
-            (take-while #(<= (* % %) n) (iterate #(+ 2 %) 3)))])
+  [n]
+  (every? #(pos? (mod n %))
+          (take-while #(<= (* % %) n) (iterate #(+ 2 %) 3))))
 
 (defn prime?
   "n is prime?"
