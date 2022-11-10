@@ -38,13 +38,14 @@
   [milli]
   (-> milli
       Instant/ofEpochMilli
-      (instant->datetime)))
+      instant->datetime))
 
 (defn second->datetime
   "input second from epoch,
    returns LocalDateTime object"
   [second]
-  (milli->datetime (* 1000 second)))
+  (-> (* 1000 second)
+      milli->datetime))
 
 (comment
   (let [dtf (DateTimeFormatter/ofPattern "yyyy/MM/dd")]
@@ -56,6 +57,14 @@
     [(.format dtf (second->datetime 1661330819))
      (.format dtf (-> (now-in-second) (second->datetime)))]))
 
+(defn milli->str
+  ([n]
+   (milli->str "yyyy-MM-dd hh:mm:dd" n))
+  ([fmt n]
+   (->> (milli->datetime n)
+        (.format (DateTimeFormatter/ofPattern fmt)))))
+
+;; FIXME: DRY!
 (defn second->str
   ([n]
    (second->str "yyyy-MM-dd hh:mm:dd" n))
