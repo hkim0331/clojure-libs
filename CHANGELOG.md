@@ -3,6 +3,7 @@
 ## Unreleased
 - Java interface is one of my weak points.
 - improve java-time.
+  it may be better to use clojure library than java's.
 
 
 ## [0.2.2] - 2022-09-07
