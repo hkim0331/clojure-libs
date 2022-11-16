@@ -30,3 +30,9 @@
     (is (= [2 2 2 2 2 2 2 2 2 2] (factor-integer 1024)))
     (is (= [3 3 3607 3803] (factor-integer 123456789)))))
 
+(deftest mode-test
+  (testing "test mode"
+    (is (= 1 (mode [1])))
+    (is (= 2 (mode (shuffle [1 1 1 1 2 2 2 2 2 3 3 3]))))
+    (is (= 3 (mode (shuffle
+                    (concat (repeat 10 3) (repeat 5 2) (repeat 3 4))))))))

@@ -110,3 +110,12 @@
 (comment
   (combinations [1 2 3] 2)
   (combinations [1 2 3 4] 2))
+
+;; mode
+(defn mode [xs]
+  (->> xs
+       sort
+       (partition-by identity)
+       (sort-by count)
+       last
+       first))
