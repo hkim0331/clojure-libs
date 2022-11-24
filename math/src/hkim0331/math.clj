@@ -135,3 +135,12 @@
 ;; nil
 
 (time (is-square 1429822969))
+
+;; mode
+(defn mode [xs]
+  (->> xs
+       sort
+       (partition-by identity)
+       (sort-by count)
+       last
+       first))
