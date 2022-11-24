@@ -20,7 +20,7 @@
     :else (* b (pow b (dec n)))))
 
 (defn power
-  ""
+  "rewturns b's power of n."
   [b n]
   (cond
     (pos? n) (pow b n)
@@ -110,3 +110,28 @@
 (comment
   (combinations [1 2 3] 2)
   (combinations [1 2 3 4] 2))
+
+;; 2022-11-23
+(defn square? [n]
+  (->> (factor-integer n)
+       (partition-by identity)
+       (map count)
+       (every? even?)))
+
+(time (square? 302377321))
+
+;; (time (square? (+ 1 (* 1024 1024))))
+;; "Elapsed time: 14.522792 msecs"
+;;
+
+(defn is-square [n]
+  "using math/sqare, judge n is square or not."
+  (let [m (math/sqrt n)]
+    (some true? (map #(= n (* % %)) (range 0 (inc m))))))
+;; (time (is-square (* 1024 1024)))
+;; "Elapsed time: 0.397209 msecs"
+;; (time (is-square (+ 1 (* 1024 1024))))
+;; "Elapsed time: 0.388208 msecs"
+;; nil
+
+(time (is-square 1429822969))
