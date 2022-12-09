@@ -111,6 +111,15 @@
   (combinations [1 2 3] 2)
   (combinations [1 2 3 4] 2))
 
+;; mode
+(defn mode [xs]
+  (->> xs
+       sort
+       (partition-by identity)
+       (sort-by count)
+       last
+       first))
+
 ;; 2022-11-23
 (defn square? [n]
   (->> (factor-integer n)
@@ -118,7 +127,7 @@
        (map count)
        (every? even?)))
 
-(time (square? 302377321))
+(time (square? 1429822969))
 
 ;; (time (square? (+ 1 (* 1024 1024))))
 ;; "Elapsed time: 14.522792 msecs"
@@ -136,11 +145,3 @@
 
 (time (is-square 1429822969))
 
-;; mode
-(defn mode [xs]
-  (->> xs
-       sort
-       (partition-by identity)
-       (sort-by count)
-       last
-       first))
