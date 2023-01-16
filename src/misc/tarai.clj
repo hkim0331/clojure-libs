@@ -1,4 +1,4 @@
-(ns hkim0331.tarai)
+(ns misc.tarai)
 
 (def ^:private version "0.0.1")
 

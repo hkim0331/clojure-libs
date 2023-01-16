@@ -1,7 +1,7 @@
-(ns hkim0331.java-time-test
+(ns java-time.main-test
   (:require
    [clojure.test :refer [deftest testing is]]
-   [hkim0331.java-time :refer :all]))
+   [java-time.main :refer :all]))
 
 (deftest str->milli-test
   (testing "str->milli"

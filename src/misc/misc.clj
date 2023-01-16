@@ -1,4 +1,4 @@
-(ns hkim0331.misc
+(ns misc.misc
   (:require
    [clojure.string :as str])
   (:import java.util.Base64))

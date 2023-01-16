@@ -1,4 +1,4 @@
-(ns hkim0331.math
+(ns math.math
   (:require
    [clojure.math :as math]))
 
@@ -145,3 +145,33 @@
 
 (time (is-square 1429822969))
 
+(defn sq? [n]
+  (let [m (->> (iterate inc 1)
+               (drop-while #(< (* % %) n))
+               first)]
+    (= (* m m) n)))
+
+(filter sq? (range 1000))
+(time (sq? (* 1024 1024)))
+(time (sq? (inc (* 1024 1024))))
+
+(defn gcd [x y]
+  (if (zero? y)
+    x
+    (gcd y (mod x y))))
+
+(defn gcd-all [xs]
+  (reduce gcd xs))
+
+(gcd-all [6 7 8 10])
+
+(reduce * (range 1 11))
+
+(defn lcm [x y]
+  (/ (* x y) (gcd x y)))
+
+(= (reduce lcm (range 1 21))
+   (* 2 3 2 5 7 2 3 11 13 2 17 19))
+
+
+(reduce lcm (range 1 31))
