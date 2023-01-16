@@ -1,4 +1,4 @@
-(ns hkim0331.javatime
+(ns javatime.javatime
   ;; without import, java libraries are callable.
   ;; when imported, aliases can be used. not FQN.
   (:import
@@ -38,36 +38,39 @@
   [milli]
   (-> milli
       Instant/ofEpochMilli
-      (instant->datetime)))
+      instant->datetime))
 
 (defn second->datetime
   "input second from epoch,
    returns LocalDateTime object"
   [second]
-  (milli->datetime (* 1000 second)))
+  (-> (* 1000 second)
+      milli->datetime))
 
 (comment
   (let [dtf (DateTimeFormatter/ofPattern "yyyy/MM/dd")]
     (.format dtf (second->datetime 1661330819))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
 (comment
   (let [dtf (DateTimeFormatter/ofPattern "yyyy-MM-dd")]
     [(.format dtf (second->datetime 1661330819))
      (.format dtf (-> (now-in-second) (second->datetime)))]))
 
+(defn milli->str
+  ([n]
+   (milli->str "yyyy-MM-dd hh:mm:dd" n))
+  ([fmt n]
+   (->> (milli->datetime n)
+        (.format (DateTimeFormatter/ofPattern fmt)))))
+
+;; FIXME: DRY!
 (defn second->str
   ([n]
    (second->str "yyyy-MM-dd hh:mm:dd" n))
   ([fmt n]
    (->> (second->datetime n)
         (.format (DateTimeFormatter/ofPattern fmt)))))
-
-(comment
-  (second->str 1661330819)
-  (second->str "yyyy/MM/dd hh:mm a" 1661330819)
-  (second->str (now-in-second)))
 
 ;; WHY T, Z?
 (defn str->second
@@ -81,6 +84,8 @@
   (* 1000 (str->second s)))
 
 (comment
+  (second->str 1661330819)
+  (second->str "yyyy/MM/dd hh:mm a" 1661330819)
+  (second->str (now-in-second))
   (str->milli  "2022-09-06T12:34:56Z")
   (str->second "2022-09-06T12:34:56Z"))
-

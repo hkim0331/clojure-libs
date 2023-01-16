@@ -8,6 +8,7 @@
 * prime?
 * factor-integer
 * combinations
+* mode
 
 ## test
 

@@ -1,4 +1,6 @@
-(ns hkim0331.math)
+(ns math.math
+  (:require
+   [clojure.math :as math]))
 
 ;; sq
 (defn sq
@@ -8,7 +10,7 @@
 
 ;; sqrt, Newton Raphson method
 
-;; power
+;;; clojure.math/power
 (defn- pow
   "returns b's power of n. n must be positive."
   [b n]
@@ -18,17 +20,12 @@
     :else (* b (pow b (dec n)))))
 
 (defn power
-  ""
+  "rewturns b's power of n."
   [b n]
   (cond
     (pos? n) (pow b n)
     (zero? n) 1
     :else (/ 1 (pow b (- n)))))
-
-(comment
-  (power 2 0)
-  (power 2 10)
-  (power 2 100))
 
 ;; digits
 (defn digits
@@ -37,10 +34,6 @@
   (if (< n 10)
     1
     (+ 1 (digits (/ n 10)))))
-
-(comment
-  (digits 12345)
-  (digits (power 10 10)))
 
 ;; primes
 ;; Excerpted from "Programming Clojure, Third Edition",
@@ -66,9 +59,8 @@
 
 (defn- prime?-aux
   [n]
-  (let [inc2 (comp inc inc)]
-    (every? #(pos? (mod n %))
-            (take-while #(<= (* % %) n) (iterate inc2 3)))))
+  (every? #(pos? (mod n %))
+          (take-while #(<= (* % %) n) (iterate #(+ 2 %) 3))))
 
 (defn prime?
   "n is prime?"
@@ -79,11 +71,9 @@
     :else (prime?-aux n)))
 
 (defn prime
-  "Returns nth prime number"
+  "Returns nth prime number."
   [n]
-  (->> primes
-       (take n)
-       last))
+  (->> primes (take n) last))
 
 ;; how to be lazy?
 ;; 2021-02-14
@@ -101,13 +91,13 @@
     (factor-odd n 3 ret)))
 
 (defn factor-integer
-  "factor integer of n"
+  "Factor integer of n"
   [n]
   (factor-aux n []))
 
 ;; combinations
 (defn combinations
-  "choose n items from disjointed collection `coll`"
+  "Choose n items from disjointed collection `coll`."
   [coll n]
   (cond
     (or (empty? coll) (zero? n)) []
@@ -120,3 +110,68 @@
 (comment
   (combinations [1 2 3] 2)
   (combinations [1 2 3 4] 2))
+
+;; mode
+(defn mode [xs]
+  (->> xs
+       sort
+       (partition-by identity)
+       (sort-by count)
+       last
+       first))
+
+;; 2022-11-23
+(defn square? [n]
+  (->> (factor-integer n)
+       (partition-by identity)
+       (map count)
+       (every? even?)))
+
+(time (square? 1429822969))
+
+;; (time (square? (+ 1 (* 1024 1024))))
+;; "Elapsed time: 14.522792 msecs"
+;;
+
+(defn is-square [n]
+  "using math/sqare, judge n is square or not."
+  (let [m (math/sqrt n)]
+    (some true? (map #(= n (* % %)) (range 0 (inc m))))))
+;; (time (is-square (* 1024 1024)))
+;; "Elapsed time: 0.397209 msecs"
+;; (time (is-square (+ 1 (* 1024 1024))))
+;; "Elapsed time: 0.388208 msecs"
+;; nil
+
+(time (is-square 1429822969))
+
+(defn sq? [n]
+  (let [m (->> (iterate inc 1)
+               (drop-while #(< (* % %) n))
+               first)]
+    (= (* m m) n)))
+
+(filter sq? (range 1000))
+(time (sq? (* 1024 1024)))
+(time (sq? (inc (* 1024 1024))))
+
+(defn gcd [x y]
+  (if (zero? y)
+    x
+    (gcd y (mod x y))))
+
+(defn gcd-all [xs]
+  (reduce gcd xs))
+
+(gcd-all [6 7 8 10])
+
+(reduce * (range 1 11))
+
+(defn lcm [x y]
+  (/ (* x y) (gcd x y)))
+
+(= (reduce lcm (range 1 21))
+   (* 2 3 2 5 7 2 3 11 13 2 17 19))
+
+
+(reduce lcm (range 1 31))
