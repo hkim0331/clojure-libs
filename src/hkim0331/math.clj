@@ -1,4 +1,4 @@
-(ns math.math
+(ns hkim0331.math
   (:require
    [clojure.math :as math]
    [hyperfiddle.rcf :refer [tests]]))
@@ -143,8 +143,12 @@
        (map count)
        (every? even?)))
 
-(time (square? 1429822969))
-
+;;(time (square? 1429822969))
+;; "Elapsed time: 2.077208 msecs"
+;; "Elapsed time: 2.043958 msecs"
+;; "Elapsed time: 1.701917 msecs"
+;; "Elapsed time: 1.045583 msecs"
+;; (time (square? (+ 1 (* 1024 1024))))
 ;; (time (square? (+ 1 (* 1024 1024))))
 ;; "Elapsed time: 14.522792 msecs"
 ;;
@@ -153,13 +157,35 @@
   "using math/sqare, judge n is square or not."
   (let [m (math/sqrt n)]
     (some true? (map #(= n (* % %)) (range 0 (inc m))))))
-;; (time (is-square (* 1024 1024)))
+;;(time (is-square (* 1024 1024)))
 ;; "Elapsed time: 0.397209 msecs"
-;; (time (is-square (+ 1 (* 1024 1024))))
+;;(time (is-square (+ 1 (* 1024 1024))))
 ;; "Elapsed time: 0.388208 msecs"
 ;; nil
 
-(time (is-square 1429822969))
+;;(time (is-square 1429822969))
+
+;; mode
+(defn mode [xs]
+  (->> xs
+       sort
+       (partition-by identity)
+       (sort-by count)
+       last
+       first))
+
+;; Py99-107
+
+(defn power-sum [n m]
+  (apply + (map #(pow n %) (range (inc m)))))
+
+;;(power-sum 2 7)
+
+(->> (factor-integer 2095632000)
+     (partition-by identity)
+     (map (fn [x] [(first x) (count x)]))
+     (map (fn [[n m]] (power-sum n m)))
+     (reduce *))
 
 (defn sq? [n]
   (let [m (->> (iterate inc 1)
@@ -179,15 +205,16 @@
 (defn gcd-all [xs]
   (reduce gcd xs))
 
-(gcd-all [6 7 8 10])
-
-(reduce * (range 1 11))
 
 (defn lcm [x y]
   (/ (* x y) (gcd x y)))
 
-(= (reduce lcm (range 1 21))
-   (* 2 3 2 5 7 2 3 11 13 2 17 19))
+(comment
+  (gcd-all [6 7 8 10])
 
+  (reduce * (range 1 11))
+  (= (reduce lcm (range 1 21))
+     (* 2 3 2 5 7 2 3 11 13 2 17 19))
+  (reduce lcm (range 1 31))
+  :rcf)
 
-(reduce lcm (range 1 31))

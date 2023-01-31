@@ -1,4 +1,4 @@
-(ns javatime.javatime
+(ns hkim0331.javatime
   ;; without import, java libraries are callable.
   ;; when imported, aliases can be used. not FQN.
   (:import

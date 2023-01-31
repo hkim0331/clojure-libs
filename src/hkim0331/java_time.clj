@@ -1,4 +1,4 @@
-(ns java-time.java-time
+(ns hkim0331.java-time
   (:require
    [clojure.string :as str]
    [java-time :as jt]

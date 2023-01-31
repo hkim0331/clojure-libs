@@ -1,7 +1,13 @@
 {:paths ["src"]
 
+<<<<<<< HEAD
  :deps {
         clojure.java-time/clojure.java-time {:mvn/version "1.2.0"}
         com.hyperfiddle/rcf {:mvn/version "20220926-202227"}
         }
  }
+=======
+ :deps {clojure.java-time/clojure.java-time {:mvn/version "1.2.0"}
+        com.hyperfiddle/rcf {:mvn/version "20220926-202227"}}
+}
+>>>>>>> e47141942e095049fbb7f72330109c47ed811472

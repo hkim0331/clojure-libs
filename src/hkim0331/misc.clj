@@ -1,4 +1,4 @@
-(ns misc.misc
+(ns hkim0331.misc
   (:require
    [clojure.string :as str])
   (:import java.util.Base64))
@@ -20,7 +20,6 @@
   ([n s]
    (let [re (re-pattern (format "^(.{%d}).*" n))]
      (str/replace s re (str "$1" "...")))))
-
 
 ;;; Base 64
 (defn ->base64
@@ -132,7 +131,8 @@
 
 (comment
   (fold-l + 0 (range 10))
-  (fold-r + 0 (range 10)))
+  (fold-r + 0 (range 10))
+  :rcf)
 
 
 ;;; inject
