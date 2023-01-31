@@ -22,11 +22,14 @@
 ;; nuc で実験。コンテナはひどく遅い。
 (comment
   (time (tarai 15 7 0)))
-;; m3    "Elapsed time: 10744.901625 msecs"
-;; macos "Elapsed time: 17523.399916 msecs"
-;;       "Elapsed time: 28853.187034 msecs"
+
+;; m64:
+;; "Elapsed time: 10836.377334 msecs"
+;; "Elapsed time: 10769.010792 msecs"
+;; m3:
+;;  "Elapsed time: 10744.901625 msecs"
 ;; docker-compose up
-;;       "Elapsed time: 193561.018473 msecs"
+;;  "Elapsed time: 193561.018473 msecs"
 ;; m2:
 ;;  "Elapsed time: 12051.361667 msecs"
 ;;  "Elapsed time: 12050.578041 msecs"
