@@ -1,6 +1,12 @@
 (ns math.math
   (:require
-   [clojure.math :as math]))
+   [clojure.math :as math]
+   [hyperfiddle.rcf :refer [tests]]))
+
+(defn -main [& _args]
+  (println "namespace is math.math"))
+
+;;(hyperfiddle.rcf/enable!)
 
 ;; sq
 (defn sq
@@ -8,7 +14,12 @@
   [n]
   (* n n))
 
+(tests
+ (sq 2) := 4
+ (sq -2) := 4)
+
 ;; sqrt, Newton Raphson method
+;; not yet.
 
 ;;; clojure.math/power
 (defn- pow
@@ -20,12 +31,17 @@
     :else (* b (pow b (dec n)))))
 
 (defn power
-  "rewturns b's power of n."
+  "returns b's power of n."
   [b n]
   (cond
     (pos? n) (pow b n)
     (zero? n) 1
     :else (/ 1 (pow b (- n)))))
+
+(tests
+ (power 2 10) := 1024
+ (power 2 -10) := 1/1024
+ )
 
 ;; digits
 (defn digits

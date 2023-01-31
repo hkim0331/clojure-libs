@@ -1,7 +1,7 @@
-(ns hkim0331.math-test
+(ns math.math-test
   (:require
    [clojure.test :refer [deftest testing is]]
-   [hkim0331.math :refer :all]))
+   [math.math :refer :all]))
 
 (deftest power-test
   (testing "test math"

@@ -1,7 +1,7 @@
-(ns hkim0331.misc-test
+(ns misc.misc-test
   (:require
    [clojure.test :refer [deftest testing is]]
-   [hkim0331.misc :refer :all]))
+   [misc.misc :refer :all]))
 
 (deftest abbrev-test
   (testing "testing abbrev"

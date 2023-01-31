@@ -36,6 +36,7 @@
        (map char)
        (apply str)))
 
+(+ 1 2)
 
 ;; compress/expand
 (defn compress

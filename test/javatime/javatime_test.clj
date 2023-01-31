@@ -1,7 +1,7 @@
-(ns hkim0331.javatime-test
+(ns javatime.javatime-test
   (:require
    [clojure.test :refer [deftest testing is]]
-   [hkim0331.javatime :refer :all]))
+   [javatime.javatime :refer :all]))
 
 ;; WHY?
 (deftest milli->str-test
