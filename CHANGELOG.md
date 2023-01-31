@@ -2,12 +2,14 @@
 
 ## Unreleased
 - Java interface is one of my weak points.
-### Bug
- ```
-(let [e (hj/now-in-epoch)
-      e2 (hj/datetime->epoch (hj/epoch->datetime e)
-     (- e e2))
-```
+- improve java-time.
+  it may be better to use clojure library than java's.
+
+## 0.3.0 - 2023-01-31
+- changed directory struture(clojure standard?)
+
+## 0.2.3-SNAPSHOT
+- why? (= (str (milli->str 0)) "1970-01-01 09:00:01"))))
 
 ## [0.2.2] - 2022-09-07
 ### Fixed

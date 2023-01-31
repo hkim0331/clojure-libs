@@ -3,6 +3,13 @@
    [clojure.string :as str])
   (:import java.util.Base64))
 
+;;; probe
+(defn probe
+  ([x]
+   (probe x #(println "probe:" %)))
+  ([x f]
+   (f x)
+   x))
 
 ;;; string abbreviation
 (defn abbrev
@@ -13,7 +20,6 @@
   ([n s]
    (let [re (re-pattern (format "^(.{%d}).*" n))]
      (str/replace s re (str "$1" "...")))))
-
 
 ;;; Base 64
 (defn ->base64
@@ -44,15 +50,15 @@
 
 (defn digit?
   [c]
-  (seq (filter (partial = c) "0123456789")))
+  (seq (filter #(= c %) "0123456789")))
 
 (defn small-alpha?
   [c]
-  (seq (filter (partial = c) "abcdefghijklmnopqrstuvwxyz")))
+  (seq (filter #(= c %) "abcdefghijklmnopqrstuvwxyz")))
 
 (defn large-alpha?
   [c]
-  (seq (filter (partial = c) "ABCDEFGHIJKLMNOPQRSTUVWXYZ")))
+  (seq (filter #(= c %) "ABCDEFGHIJKLMNOPQRSTUVWXYZ")))
 
 (defn alpha?
   [c]
@@ -86,7 +92,7 @@
 (defn- eqls
   "returns items equal to n in coll"
   [n coll]
-  (filter (partial = n) coll))
+  (filter #(= n %) coll))
 
 (defn qsort
   "quick-sort coll"
@@ -124,7 +130,8 @@
 
 (comment
   (fold-l + 0 (range 10))
-  (fold-r + 0 (range 10)))
+  (fold-r + 0 (range 10))
+  :rcf)
 
 
 ;;; inject
