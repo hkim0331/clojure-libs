@@ -2,6 +2,10 @@
 
 (def ^:private version "0.0.1")
 
+(comment
+  version
+  :rcf)
+
 (defn tarai
   [x y z]
   (if (<= x y)
@@ -18,25 +22,6 @@
          (tak (dec y) z x)
          (tak (dec z) x y))))
 
-
-;; nuc で実験。コンテナはひどく遅い。
-(comment
-  (time (tarai 15 7 0)))
-
-;; m64:
-;; "Elapsed time: 10836.377334 msecs"
-;; "Elapsed time: 10769.010792 msecs"
-;; m3:
-;;  "Elapsed time: 10744.901625 msecs"
-;; docker-compose up
-;;  "Elapsed time: 193561.018473 msecs"
-;; m2:
-;;  "Elapsed time: 12051.361667 msecs"
-;;  "Elapsed time: 12050.578041 msecs"
-;;  "Elapsed time: 12041.758583 msecs"
-;; nuc:
-;;  "Elapsed time: 34066.433117 msecs"
-
 ;; memoized
 (defn memoized-tarai [x y z]
   (let [memo (atom {})]
@@ -51,9 +36,6 @@
                       result))))]
       (tarai x y z))))
 
-(time (memoized-tarai 15 7 0))
-;; "Elapsed time: 1.675791 msecs"
-
 ;; lazy function
 (defn lazy-tarai [x y z]
   (letfn [(tarai [fx fy fz]
@@ -65,7 +47,22 @@
     (tarai (fn [] x) (fn [] y) (fn [] z))))
 
 
-(time (lazy-tarai 15 7 0))
-;; "Elapsed time: 1.012375 msecs"
-
-
+(comment
+  (time (lazy-tarai 15 7 0))
+  (time (memoized-tarai 15 7 0))
+  (time (tarai 15 7 0))
+  (time (+ 1 2 3))
+  :rcf)
+;; m64:
+;; "Elapsed time: 10836.377334 msecs"
+;; "Elapsed time: 10769.010792 msecs"
+;; m3:
+;;  "Elapsed time: 10744.901625 msecs"
+;; docker-compose up
+;;  "Elapsed time: 193561.018473 msecs"
+;; m2:
+;;  "Elapsed time: 12051.361667 msecs"
+;;  "Elapsed time: 12050.578041 msecs"
+;;  "Elapsed time: 12041.758583 msecs"
+;; nuc:
+;;  "Elapsed time: 34066.433117 msecs"

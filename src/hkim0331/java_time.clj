@@ -54,3 +54,11 @@
   ([fmt second]
    (milli->str fmt (* 1000 second))))
 
+;; (second->str 1667190341)
+
+;; 2022-12-19
+(def unix-time->str second->str)
+
+(comment
+  (unix-timestamp->datetime-str (* 1667190341 1000))
+  :rcf)

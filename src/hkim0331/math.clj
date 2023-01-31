@@ -111,6 +111,15 @@
   (combinations [1 2 3] 2)
   (combinations [1 2 3 4] 2))
 
+;; mode
+(defn mode [xs]
+  (->> xs
+       sort
+       (partition-by identity)
+       (sort-by count)
+       last
+       first))
+
 ;; 2022-11-23
 (defn square? [n]
   (->> (factor-integer n)
@@ -123,7 +132,8 @@
 ;; "Elapsed time: 2.043958 msecs"
 ;; "Elapsed time: 1.701917 msecs"
 ;; "Elapsed time: 1.045583 msecs"
-;;(time (square? (+ 1 (* 1024 1024))))
+;; (time (square? (+ 1 (* 1024 1024))))
+;; (time (square? (+ 1 (* 1024 1024))))
 ;; "Elapsed time: 14.522792 msecs"
 ;;
 
@@ -160,4 +170,35 @@
      (map (fn [x] [(first x) (count x)]))
      (map (fn [[n m]] (power-sum n m)))
      (reduce *))
+
+(defn sq? [n]
+  (let [m (->> (iterate inc 1)
+               (drop-while #(< (* % %) n))
+               first)]
+    (= (* m m) n)))
+
+(filter sq? (range 1000))
+(time (sq? (* 1024 1024)))
+(time (sq? (inc (* 1024 1024))))
+
+(defn gcd [x y]
+  (if (zero? y)
+    x
+    (gcd y (mod x y))))
+
+(defn gcd-all [xs]
+  (reduce gcd xs))
+
+
+(defn lcm [x y]
+  (/ (* x y) (gcd x y)))
+
+(comment
+  (gcd-all [6 7 8 10])
+
+  (reduce * (range 1 11))
+  (= (reduce lcm (range 1 21))
+     (* 2 3 2 5 7 2 3 11 13 2 17 19))
+  (reduce lcm (range 1 31))
+  :rcf)
 
