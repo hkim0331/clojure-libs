@@ -144,3 +144,14 @@
        (sort-by count)
        last
        first))
+
+(defn max2 [x y]
+  (if (< x y)
+    y
+    x))
+
+(defn my-max
+  ([x] x)
+  ([x y] (max2 x y))
+  ([x y & more]
+   (reduce my-max (max2 x y) more)))
