@@ -21,7 +21,6 @@
    (let [re (re-pattern (format "^(.{%d}).*" n))]
      (str/replace s re (str "$1" "...")))))
 
-
 ;;; Base 64
 (defn ->base64
   [s]
@@ -36,6 +35,7 @@
        (map char)
        (apply str)))
 
+(+ 1 2)
 
 ;; compress/expand
 (defn compress
@@ -131,7 +131,8 @@
 
 (comment
   (fold-l + 0 (range 10))
-  (fold-r + 0 (range 10)))
+  (fold-r + 0 (range 10))
+  :rcf)
 
 
 ;;; inject

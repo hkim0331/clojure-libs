@@ -1,6 +1,12 @@
 (ns hkim0331.math
   (:require
-   [clojure.math :as math]))
+   [clojure.math :as math]
+   [hyperfiddle.rcf :refer [tests]]))
+
+(defn -main [& _args]
+  (println "namespace is math.math"))
+
+;;(hyperfiddle.rcf/enable!)
 
 ;; sq
 (defn sq
@@ -8,7 +14,12 @@
   [n]
   (* n n))
 
+(tests
+ (sq 2) := 4
+ (sq -2) := 4)
+
 ;; sqrt, Newton Raphson method
+;; not yet.
 
 ;;; clojure.math/power
 (defn- pow
@@ -20,12 +31,17 @@
     :else (* b (pow b (dec n)))))
 
 (defn power
-  "rewturns b's power of n."
+  "returns b's power of n."
   [b n]
   (cond
     (pos? n) (pow b n)
     (zero? n) 1
     :else (/ 1 (pow b (- n)))))
+
+(tests
+ (power 2 10) := 1024
+ (power 2 -10) := 1/1024
+ )
 
 ;; digits
 (defn digits
@@ -111,6 +127,15 @@
   (combinations [1 2 3] 2)
   (combinations [1 2 3 4] 2))
 
+;; mode
+(defn mode [xs]
+  (->> xs
+       sort
+       (partition-by identity)
+       (sort-by count)
+       last
+       first))
+
 ;; 2022-11-23
 (defn square? [n]
   (->> (factor-integer n)
@@ -118,8 +143,12 @@
        (map count)
        (every? even?)))
 
-(time (square? 302377321))
-
+;;(time (square? 1429822969))
+;; "Elapsed time: 2.077208 msecs"
+;; "Elapsed time: 2.043958 msecs"
+;; "Elapsed time: 1.701917 msecs"
+;; "Elapsed time: 1.045583 msecs"
+;; (time (square? (+ 1 (* 1024 1024))))
 ;; (time (square? (+ 1 (* 1024 1024))))
 ;; "Elapsed time: 14.522792 msecs"
 ;;
@@ -128,13 +157,13 @@
   "using math/sqare, judge n is square or not."
   (let [m (math/sqrt n)]
     (some true? (map #(= n (* % %)) (range 0 (inc m))))))
-;; (time (is-square (* 1024 1024)))
+;;(time (is-square (* 1024 1024)))
 ;; "Elapsed time: 0.397209 msecs"
-;; (time (is-square (+ 1 (* 1024 1024))))
+;;(time (is-square (+ 1 (* 1024 1024))))
 ;; "Elapsed time: 0.388208 msecs"
 ;; nil
 
-(time (is-square 1429822969))
+;;(time (is-square 1429822969))
 
 ;; mode
 (defn mode [xs]
@@ -145,13 +174,46 @@
        last
        first))
 
-(defn max2 [x y]
-  (if (< x y)
-    y
-    x))
+;; Py99-107
 
-(defn my-max
-  ([x] x)
-  ([x y] (max2 x y))
-  ([x y & more]
-   (reduce my-max (max2 x y) more)))
+(defn power-sum [n m]
+  (apply + (map #(pow n %) (range (inc m)))))
+
+;;(power-sum 2 7)
+
+(->> (factor-integer 2095632000)
+     (partition-by identity)
+     (map (fn [x] [(first x) (count x)]))
+     (map (fn [[n m]] (power-sum n m)))
+     (reduce *))
+
+(defn sq? [n]
+  (let [m (->> (iterate inc 1)
+               (drop-while #(< (* % %) n))
+               first)]
+    (= (* m m) n)))
+
+(filter sq? (range 1000))
+(time (sq? (* 1024 1024)))
+(time (sq? (inc (* 1024 1024))))
+
+(defn gcd [x y]
+  (if (zero? y)
+    x
+    (gcd y (mod x y))))
+
+(defn gcd-all [xs]
+  (reduce gcd xs))
+
+
+(defn lcm [x y]
+  (/ (* x y) (gcd x y)))
+
+(comment
+  (gcd-all [6 7 8 10])
+
+  (reduce * (range 1 11))
+  (= (reduce lcm (range 1 21))
+     (* 2 3 2 5 7 2 3 11 13 2 17 19))
+  (reduce lcm (range 1 31))
+  :rcf)
